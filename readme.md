@@ -67,10 +67,13 @@ The run_finetuning_v2.py script loads the pre-trained facebook/wav2vec2-large-xl
 🌍 Extension: How to Add a New Language
 
 This pipeline was designed to be modular. Follow this roadmap to add a new language (e.g., Goun, Mina, Wolof) to the model.
+
+
 **Step 1: Prepare the Data**
 Create a new folder in data/ (e.g., data/goun_corpus/). Ensure your data follows one of these structures:
 CSV Format: path/to/audio.wav, transcript
 Kaldi Format: text file and wav.scp file.
+
 **Step 2: Update the Preprocessing Script**
 Modify finetuning/prepare_data.py to include the new language path.
     ```bash
@@ -87,18 +90,19 @@ Modify finetuning/prepare_data.py to include the new language path.
         multilingual_dataset = concatenate_datasets([fon_data, yoruba_data, goun_data])
         
         return multilingual_dataset
+        
 **Step 3: Update Vocabulary**
 The script automatically builds the vocabulary from the training data. However, if your new language introduces specific characters (unique diacritics not present in Fon/Yoruba), ensure they are not removed by the cleaning regex function in prepare_data.py.
+
 **Step 4: Incremental Training (Optional)**
 If you want to keep the knowledge from the existing Fon/Yoruba model, load the locally saved checkpoint instead of the Facebook base model in run_finetuning_v2.py:
-    ```bash
-    # Change this line:
-    model_name = "facebook/wav2vec2-large-xlsr-53"
-    # To this:
-    model_name = "./xlsr-finetuned-fon-yor/checkpoint-best"
-Then run the training script again.
+      ```bash  # Change this line:
+       model_name = "facebook/wav2vec2-large-xlsr-53"
+       # To this:
+       model_name = "./xlsr-finetuned-fon-yor/checkpoint-best"
 
-## 📊 Results**
+Then run the training script again.
+## 📊 Results
 Language	Model	WER (%)	CER (%)
 Fongbe	Base XLS-R	100%	100%
 Fongbe	Fine-Tuned	29.93%	9.96%
