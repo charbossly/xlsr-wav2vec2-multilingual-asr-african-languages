@@ -96,10 +96,11 @@ The script automatically builds the vocabulary from the training data. However, 
 
 **Step 4: Incremental Training (Optional)**
 If you want to keep the knowledge from the existing Fon/Yoruba model, load the locally saved checkpoint instead of the Facebook base model in run_finetuning_v2.py:
-      ```bash  # Change this line:
-       model_name = "facebook/wav2vec2-large-xlsr-53"
-       # To this:
-       model_name = "./xlsr-finetuned-fon-yor/checkpoint-best"
+   ```bash  # Change this line:
+    model_name = "facebook/wav2vec2-large-xlsr-53"
+    # To this:
+    model_name = "./xlsr-finetuned-fon-yor/checkpoint-best"
+    ```
 
 Then run the training script again.
 ## 📊 Results
